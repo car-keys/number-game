@@ -1,0 +1,10 @@
+Artifact: Item that can be held and traded by players
+    Rarity: subjective value of how rare this is
+    Passive(): ability that happens passivley (gaining money, etc)
+        -params: deltaT, player
+    Active(): ability that happens on activation, optional cooldown
+        -params: deltaT, player
+    Cooldown: cooldown variable for active
+    
+Upgrade: Unremovable boost a player can unlock
+    
