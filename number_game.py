@@ -3,6 +3,7 @@ from pathlib import Path
 
 #####-CONSTANTS-#####
 SECONDS_IN_DAY = 86400
+SECONDS_IN_HOUR
 CM = 'Common'
 UNCM = 'Uncommon'
 RARE = 'Rare'
@@ -48,26 +49,32 @@ client.run('NTE3NTQ4ODMxNzY0NjQzODgw.DuD0tQ.HF2LnifglJACb6zGw3tOHqp3bHI')
 
 async def register_user(message):
     
-    
+#Inventory: list of artifact instances
+#Bank: dict of resource values    
 class Player:
-    def __init__(self, id):
+    def __init__(self, id, name, inventory, bank):
         self.id = id
-        self.upgrades = upgrades
-        self.artifacts = artifacts
+        self.name = name
+        self.inventory = inventory
+        self.bank = bank
         
     def to_dict(self):
         output = {}
         output['id'] = self.id
-        output['upgrades'] = 
+        output['name'] = self.name
+        output['inventory'] = [a.to_dict() for a in inventory]
+        output['bank'] = self.bank
+        return output
+    def remove_artifact(self, art):
         
-    def remove_artifact():
-    
     def add_artifact():
     
-    def add_resource():
-    
-    def spend_resource():
-    
+    def add_resource(self, name, amount):
+        self.bank['name'] += amount
+        
+    def spend_resource(self, name, amount):
+        self.bank['name'] -= amount
+        
 def make_player_from_dict(dic):
     return Player(dic['id'])
     
@@ -111,7 +118,28 @@ class Artifact:
     def from_dict(dic):
         pass
         
-        
+#---------------Template:---------------
+'''
+class <Name>(Artifact):
+    def __init__(self, name, rarity, description):
+    
+        super().__init__(name='<name>', 
+                         rarity=<rarity>,
+                         description='<desc>')
+                         
+    def passive(self, owner, T):
+        <fill>
+    
+    def active(self, owner, T):
+        <fill>
+    
+    def make_new():
+        <fill>
+    def to_dict(self):
+        <fill>
+    def from_dict(dic):
+        <fill>
+'''
 #############---Artifacts---#############
 
 #once every 24 hours, generate an egg.
@@ -171,7 +199,7 @@ class EggMachine(Artifact):
     def from_dict(dic):
         return EggMachine(dic['last_use', dic['uses'], dic['broken'])
         
-#gacha egg. gives some money for now, give more stuff later        
+#gacha egg. gives some money for now, TODO make it give other stuff     
 class Egg(Artifact):
     def __init__(self):
         super().__init__(name='Egg',
@@ -219,3 +247,9 @@ class ShittyMoneySource(Artifact):
         
     def from_dict(dic):
         return ShittyMoneySource(dic['last_produce'])
+        
+        
+#############---Upgrades---#############
+class Upgrade:
+    def __init__(self, name, description):
+        pass
