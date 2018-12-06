@@ -101,7 +101,7 @@ class Artifact:
     def active(self, owner, T):
         pass
     #create a new instance of self, with default values
-    def make_new(self):
+    def make_new():
         pass
     def to_dict(self):
         #dict should contain any info needed to reconstruct artifact, and 
@@ -144,6 +144,7 @@ class EggMachine(Artifact):
             uses += 1
             if random.random() < 0.10:
                 self.broken = True
+            self.last_use = time.time()
         self.set_description()
     
     #On activate, use a use if possible.
@@ -181,3 +182,40 @@ class Egg(Artifact):
     def active(self, owner, T):
         owner.add_resource('money', random.randint(1, 1000))
         self.destroy()
+    def make_new():
+        return Egg()
+    def to_dict(self):
+        output = {}
+        output['type'] = 'egg'
+        return output
+    def from_dict(dic):
+        return Egg()
+        
+#gives the user 1 dollar per hour
+class ShittyMoneySource(Artifact):
+    def __init__(self, last_produce):
+        self.last_produce = last_produce
+        super.__init__(name='Shitty Money Source',
+                       rarity=CM
+                       description='...its better than nothing. Produces 1 dollar every hour')
+           
+    def passive(self, owner, T):
+        dt = T - last_produce
+        dmoney = 0
+        while dt > SECONDS_IN_HOUR:
+            dt -= SECONDS_IN_HOUR
+            dmoney += 1
+        if dmoney > 0:
+            owner.add_resource('money', dmoney)
+            self.last_produce = time.time()
+
+    def make_new():
+        return ShittyMoneySource(time.time())
+        
+    def to_dict(self):
+        output = {}
+        output['type'] = 'shittymoneysource'
+        output['last_produce'] = self.last_produce
+        
+    def from_dict(dic):
+        return ShittyMoneySource(dic['last_produce'])
