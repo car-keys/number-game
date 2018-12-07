@@ -14,13 +14,13 @@ UNI = 'Unique'
 #####################
 
 client = discord.Client()
-
-
 players_in_session = []
+
+
 
 @client.event
 async def on_ready():
-    
+    print('Online.')
     
 async def on_message(message):
     if message.author != client.user and message.author.id not in players_in_session:
@@ -65,15 +65,16 @@ class Player:
         output['inventory'] = [a.to_dict() for a in inventory]
         output['bank'] = self.bank
         return output
+        
     def remove_artifact(self, art):
         
     def add_artifact():
     
     def add_resource(self, name, amount):
-        self.bank['name'] += amount
+        self.bank[name] += amount
         
     def spend_resource(self, name, amount):
-        self.bank['name'] -= amount
+        self.bank[name] -= amount
         
 def make_player_from_dict(dic):
     return Player(dic['id'])
